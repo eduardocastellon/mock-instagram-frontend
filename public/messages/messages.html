@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Messages</title>
+    <link rel="stylesheet" href="/messages/messages.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Sync dark mode from parent window
+        function syncDarkMode() {
+            try {
+                const parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+                if (parentTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            } catch (e) {
+                // If we can't access parent, check localStorage
+                const saved = localStorage.getItem('darkMode');
+                if (saved === 'true') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            }
+        }
+        
+        // Check on load
+        syncDarkMode();
+        
+        // Listen for theme changes (polling since iframe can't easily listen to parent)
+        setInterval(syncDarkMode, 500);
+    </script>
+</head>
+<body>
+<div id="messages-container">
+    <div id="users-sidebar">
+        <h3>Messages</h3>
+        <div id="user-list"></div>
+        <button id="back-to-dashboard">← Back to Dashboard</button>
+    </div>
+
+    <div id="chat-area">
+        <div id="chat-header">Select a user to start messaging</div>
+        <div id="chat-messages"></div>
+        <form id="send-form">
+            <input type="text" id="message-input" placeholder="Message..." />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<script src="/messages/messages.js"></script>
+</body>
+</html>

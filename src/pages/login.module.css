@@ -1,0 +1,141 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-md);
+}
+
+.signInContainer,
+.signUpContainer {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 350px;
+    gap: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.signInContainer:hover,
+.signUpContainer:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.signInContainer h1,
+.signUpContainer h1 {
+    margin: 0 0 var(--spacing-lg) 0;
+    font-size: 28px;
+    font-weight: 400;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.page input {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    font-size: 14px;
+    color: var(--text-primary);
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    background-color: var(--bg-primary);
+    box-shadow: 0 0 0 3px rgba(0, 149, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+.page input::placeholder {
+    color: var(--text-secondary);
+}
+
+.page button {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    height: 36px;
+    margin-top: var(--spacing-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.page button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.page button:hover {
+    background-color: var(--accent-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 149, 246, 0.3);
+}
+
+.page button:active {
+    transform: translateY(0);
+}
+
+.page button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.page button:disabled {
+    background-color: var(--accent-blue);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.signInContainer > div,
+.signUpContainer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.signInContainer > div p,
+.signUpContainer > div p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.signInContainer > div p:last-child,
+.signUpContainer > div p:last-child {
+    color: var(--accent-blue);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.signInContainer > div p:last-child:hover,
+.signUpContainer > div p:last-child:hover {
+    opacity: 0.7;
+}

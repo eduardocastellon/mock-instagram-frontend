@@ -1,0 +1,102 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    background-color: var(--bg-secondary);
+}
+
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    gap: var(--spacing-xl);
+}
+
+/* Account for sidebar on desktop */
+@media (min-width: 769px) {
+    .pageContent {
+        margin-left: 244px;
+        padding-left: var(--spacing-xl);
+    }
+}
+
+.pageContent h3 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.pageContent input,
+.pageContent textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    transition: border-color 0.2s ease;
+    font-family: inherit;
+}
+
+.pageContent input:focus,
+.pageContent textarea:focus {
+    outline: none;
+    border-color: var(--text-secondary);
+}
+
+.pageContent input::placeholder,
+.pageContent textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+.pageContent textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+.pageContent button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: var(--spacing-lg);
+}
+
+.pageContent button:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.pageContent button:active {
+    opacity: 0.8;
+}
+
+.spacer {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+    margin: var(--spacing-lg) 0;
+}
+
+/* Section styling */
+.pageContent > div {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.pageContent > h3:first-child {
+    margin-top: 0;
+}

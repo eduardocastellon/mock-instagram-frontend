@@ -1,0 +1,245 @@
+.rightSidebar {
+    position: fixed;
+    left: calc(244px + 614px + var(--spacing-xl) * 3);
+    top: 0;
+    width: 293px;
+    height: 100vh;
+    padding: var(--spacing-xl) 0;
+    overflow-y: auto;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* Hide on mobile and tablet */
+@media (max-width: 1264px) {
+    .rightSidebar {
+        display: none;
+    }
+}
+
+/* Switch Account Section */
+.switchAccountSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) 0;
+}
+
+.currentUserProfile {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex: 1;
+}
+
+.profileImage {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profileImage:hover {
+    transform: scale(1.05);
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+    min-width: 0;
+}
+
+.username {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.username:hover {
+    color: var(--accent-blue);
+}
+
+.userNickname {
+    font-size: 14px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.switchLink {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.switchLink:hover {
+    opacity: 0.7;
+}
+
+/* Suggested Section */
+.suggestedSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.suggestedHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-sm);
+}
+
+.suggestedTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.seeAllLink {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.seeAllLink:hover {
+    color: var(--accent-blue);
+}
+
+.suggestedUsersList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.suggestedUserItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.suggestedUserInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex: 1;
+    min-width: 0;
+}
+
+.suggestedUserImage {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.suggestedUserImage:hover {
+    transform: scale(1.1);
+}
+
+.suggestedUserDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.suggestedUsername {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.suggestedUsername:hover {
+    color: var(--accent-blue);
+}
+
+.suggestedUserSubtext {
+    font-size: 12px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.followButton {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.followButton:hover {
+    color: var(--accent-blue-hover);
+    opacity: 0.7;
+}
+
+.followButton:active {
+    transform: scale(0.95);
+}
+
+.loadingText,
+.noSuggestions {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: var(--spacing-md);
+}
+
+.noSuggestions p {
+    margin: 0;
+}
+
+/* Scrollbar styling for right sidebar */
+.rightSidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.rightSidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.rightSidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.rightSidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
