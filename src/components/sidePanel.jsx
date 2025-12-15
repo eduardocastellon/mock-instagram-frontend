@@ -70,7 +70,7 @@ export default function SidePanel(){
         setTitle("");
         setDescription("");
         setShowPost(false);
-        navigate(0);
+        // navigate(0);
     };
 
     return(

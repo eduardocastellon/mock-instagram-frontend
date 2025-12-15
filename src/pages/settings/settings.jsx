@@ -44,7 +44,7 @@ export default function Settings() {
             const updatedUser = await changeUser(user?.key, "CHANGE_USER", firstname, lastname, bio, nickname);
             localStorage.setItem("session",JSON.stringify(updatedUser));
             setUser(updatedUser);
-            navigate(0);
+            // navigate(0);
         }
     };
     //FUNCTION FOR HARD CHANGES
@@ -64,7 +64,7 @@ export default function Settings() {
 
         localStorage.setItem("session",JSON.stringify(updatedUser));
         setUser(updatedUser);
-        navigate(0);
+        // navigate(0);
     };
 
     //FUNCTION TO DELETE USER AND UPDATE LOCAL STORAGE
