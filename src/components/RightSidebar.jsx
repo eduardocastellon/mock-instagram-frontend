@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUsers, handleFollow, getUser } from "../functions/functions";
 import styles from "./RightSidebar.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function RightSidebar({ currentUser }) {
+    const navigate = useNavigate();
     const [suggestedUsers, setSuggestedUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -58,6 +60,22 @@ export default function RightSidebar({ currentUser }) {
         }
     };
 
+
+
+        //VIEW PROFILE FUNCTION
+    const viewProfile = async (key) => {
+        const viewUser = await getUser(key);
+        if (viewUser !== undefined && viewUser !== null && viewUser?.username){
+            // console.log("user found", viewUser);
+            localStorage.setItem("viewUser", JSON.stringify(viewUser));
+            // localStorage.setItem("viewUserUsername", JSON.stringify(viewUser?.username));
+
+            navigate(`/profile/${viewUser?.username}`);
+        }
+    };
+
+
+
     if (!currentUser) return null;
 
     return (
@@ -103,10 +121,10 @@ export default function RightSidebar({ currentUser }) {
                                         alt={user.username}
                                         className={styles.suggestedUserImage}
                                     />
-                                    <div className={styles.suggestedUserDetails}>
-                                        <Link to="/profile" className={styles.suggestedUsername}>
+                                    <div style={{gap: "0px"}} className={styles.suggestedUserDetails}>
+                                        <p onClick={() => viewProfile(user.key)} className={styles.suggestedUsername} style={{margin: "2px", cursor: "pointer"}}>
                                             {user.username}
-                                        </Link>
+                                        </p>
                                         <span className={styles.suggestedUserSubtext}>
                                             Suggested for you
                                         </span>

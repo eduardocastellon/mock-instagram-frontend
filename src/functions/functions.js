@@ -49,7 +49,7 @@ export const changeUserPass = async (protocol, user_id, username, oldPassword, n
 export const getUser = async (key) => {
     try {
         const res = await fetch(`${backend_url}/users/${encodeURIComponent(Number(key))}`, {method: "GET", headers: {'Content-Type': 'application/json'}});
-        console.log("User retrieved successfully")
+        // console.log("User retrieved successfully")
         if (!res.ok) throw new Error(res.status);
         const users = await res.json();
         return users;
@@ -146,6 +146,32 @@ export const handlePostComment = async (key, protocol, user_identifier, nickname
         console.log("Unable to reach backend");
     }
 };
+//DELETE A COMMENT FROM A POST
+export const handleDeleteComment = async (key, id) => {
+    try{
+        await fetch(`${backend_url}/posts/${encodeURIComponent(Number(key))}/comments/${encodeURIComponent(Number(id))}`, {method: "DELETE", headers: {'Content-Type': 'application/json'}});
+    } catch(e){
+        console.log("Post created successfully");
+    }
+}
+//GET ONE POST
+export const getOnePost = async (key) => {
+    try{
+        const res = await fetch(`${backend_url}/posts/${encodeURIComponent(Number(key))}`, {method: "GET", headers: {'Content-Type': 'application/json'}});
+        const post = await res.json();
+        return post;
+    } catch(e){
+        console.log("Post created successfully");
+    }
+}
+//DELETE A POST
+export const handleDeletePost = async (key) => {
+    try{
+        const res = await fetch(`${backend_url}/posts/${encodeURIComponent(Number(key))}`, {method: "DELETE", headers: {'Content-Type': 'application/json'}});
+    } catch(e){
+        console.log("Post created successfully");
+    }
+}
 //GET A SET OF POSTS FROM USER
 export const getAllUserPosts = async (user_identifier) => {
     try{

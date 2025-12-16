@@ -250,6 +250,11 @@
     max-height: 300px;
 }
 
+.deleteComment:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .commentsArea > div {
     display: flex;
     gap: var(--spacing-md);

@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./profile.module.css";
-
-import { handleDeletePost, getAllUserPosts, getOnePost, handleDeleteComment, handlePostComment, handlePostLike } from "../../functions/functions";
+import styles from "../profile/profile.module.css";
+import { handleDeleteComment, getOnePost, getAllUserPosts, getUser, handlePostComment, handlePostLike } from "../../functions/functions";
 import SidePanel from "../../components/sidePanel";
+import { handleFollow } from "../../functions/functions";
 
-export default function Profile(){
+export default function ViewOtherProfile(){
+    // const viewUserUsername = localStorage.getItem('viewUserUsername');
+    const {username} = useParams();
 
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -15,6 +18,8 @@ export default function Profile(){
     const [selectedPost, setSelectedPost] = useState(null);
     const [commentBody, setCommentBody] = useState("");
 
+    const [viewUser, setViewUser] = useState(null);
+
     //CHECK IF LOGGED IN
     useEffect(() => {
         const getUserPosts = async (session) => {
@@ -22,16 +27,22 @@ export default function Profile(){
             // console.log(posts);
             setUserPosts(posts);
         }
+        //GET CURRENT USER LOGGED IN
         const session = localStorage.getItem('session');
-        if (!session) navigate("/");
+        //GET THE USER WHO'S PROFILE WE ARE TRYING TO VIEW
+        const viewOtherUser = localStorage.getItem('viewUser');
+
+        if (!session || !viewOtherUser) navigate("/");
 
         //SESSION USER EXISTS, STORE IT IN 'USER'
-        setUser(JSON.parse(session))
-        getUserPosts(JSON.parse(session));
+        setUser(JSON.parse(session));
+        //GET OTHER USER POSTS YOU ARE TRYING TO VIEW
+        getUserPosts(JSON.parse(viewOtherUser));
+        setViewUser(JSON.parse(viewOtherUser));
         
-    }, [userPosts]);
+        
+    }, [username, userPosts]);
 
-    
     //OPEN BIG POST WINDOW
     const handleBigPostWindow = (post) => {
         setSelectedPost(post);
@@ -66,6 +77,20 @@ export default function Profile(){
         setUserPosts(posts);
     };
 
+    //FUNCTION TO FOLLOW/UNFOLLOW USER
+    const checkFollowing = async () => {
+        // console.log("check following")
+        const protocol = user?.following?.includes(viewUser?.user_id) ? "UNFOLLOW" : "FOLLOW";
+        await handleFollow(user?.key, protocol, viewUser?.user_id);
+
+        const x = await getUser(viewUser?.key);
+        const t = await getUser(user?.key);
+        localStorage.setItem("viewUser",JSON.stringify(x));
+        localStorage.setItem("session",JSON.stringify(t));
+        setUser(t);
+        setViewUser(x);
+    };
+
     //DELETE COMMENT
     const deleteComment = async (key, id) => {
         await handleDeleteComment(key, id);
@@ -74,14 +99,6 @@ export default function Profile(){
         setSelectedPost(post);
     };
 
-    //DELETE POST
-    const deletePost = async () => {
-        await handleDeletePost(selectedPost?.key);
-        const posts = await getAllUserPosts(user?.user_id);
-        if(posts === undefined || posts === null || !posts) return console.log("Error showing posts or posts do not exist");
-        setSelectedPost(posts);
-        setShowBigPostWindow(false);
-    };
 
     return(
         <div className={styles.page}>
@@ -90,13 +107,14 @@ export default function Profile(){
                 <div className={styles.profileContainer}>
                     <img src="/profile.png" alt="img" />
                     <div className={styles.profileInnerContainer}>
-                        <h1>{user?.username}</h1>
-                        <p>{user?.nickname}</p>
+                        <h1>{viewUser?.username}</h1>
+                        <p>{viewUser?.nickname}</p>
                         <div style={{display: "flex", gap: "10px"}}>
-                            <p style={{cursor: "pointer"}}>{user?.followers.length} followers</p>
-                            <p style={{cursor: "pointer"}}>{user?.following.length} following</p>
+                            <p style={{cursor: "pointer"}}>{viewUser?.followers.length} followers</p>
+                            <p style={{cursor: "pointer"}}>{viewUser?.following.length} following</p>
+                            <button onClick={() => checkFollowing()}>{user?.following?.includes(viewUser?.user_id) ? "unfollow" : "follow"}</button>
                         </div>
-                        <p>Bio: {user?.bio}</p>
+                        <p>Bio: {viewUser?.bio}</p>
                         {/* <button onClick={() => setShowSettings(true)}>Edit profile</button> */}
                     </div>
                 </div>
@@ -115,10 +133,7 @@ export default function Profile(){
                 {showBigPostWindow && (
                     <div onClick={() => setShowBigPostWindow(false)} className={styles.bigPostWindowWrapper}>
                         <div onClick={(e) => e.stopPropagation()} className={styles.bigPostWindow}>
-                            <h2 style={{display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px"}}>
-                                {selectedPost?.image_id}
-                                <button style={{backgroundColor: "red", padding: "5px", borderRadius: "0.4rem", borderColor: "red", color: "white"}} onClick={() => deletePost()}>Delete Post</button>
-                            </h2>
+                            <h2>{selectedPost?.image_id}</h2>
                             <p>{selectedPost?.description}</p>
                             <div className={styles.spacer}/>
                             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", marginBottom: "16px"}}>

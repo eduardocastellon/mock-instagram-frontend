@@ -397,6 +397,7 @@
 
 .searchUserContainer:hover {
     background-color: var(--bg-secondary);
+    cursor: pointer;
 }
 
 .searchUserContainer:last-child {

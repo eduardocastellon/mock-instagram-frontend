@@ -42,7 +42,7 @@ export default function SidePanel(){
 
     //FUNCTION TO UPDATE THE SESSION
     const updateSession = async () => {
-        console.log("update session")
+        // console.log("update session")
         //REFRESH LIST OF USERS
         const x = await getUsers();
         setUserList(x);
@@ -54,7 +54,7 @@ export default function SidePanel(){
 
     //FUNCTION TO FOLLOW/UNFOLLOW USER
     const checkFollowing = async (u) => {
-        console.log("check following")
+        // console.log("check following")
         const protocol = user?.following?.includes(u?.user_id) ? "UNFOLLOW" : "FOLLOW";
         await handleFollow(user?.key, protocol, u.user_id);
 
@@ -64,13 +64,25 @@ export default function SidePanel(){
 
     //FUNCTION TO HANDLE CREATING NEW POST
     const handlePost = async () => {
-        // console.log(user?.user_id, " | ", title, " | ", description);
         if (title === "" || description === "") return;
         await createNewPost(user?.user_id, title, description);
         setTitle("");
         setDescription("");
         setShowPost(false);
-        navigate(0);
+        window.location.reload();
+    };
+
+
+    //VIEW PROFILE FUNCTION
+    const viewProfile = async (key) => {
+        const viewUser = await getUser(key);
+        if (viewUser !== undefined && viewUser !== null && viewUser?.username){
+            // console.log("user found", viewUser);
+            localStorage.setItem("viewUser", JSON.stringify(viewUser));
+            // localStorage.setItem("viewUserUsername", JSON.stringify(viewUser?.username));
+
+            navigate(`/profile/${viewUser?.username}`);
+        }
     };
 
     return(
@@ -129,10 +141,10 @@ export default function SidePanel(){
                     {/* MAP OF USERS TO SHOW AFTER FILTERING */}
                     {searchInput === "" ? (<p>Search by username</p>) : (
                         inputFilter.map((users, i) => (
-                            <div key={i} className={styles.searchUserContainer}>
+                            <div key={i} className={styles.searchUserContainer} onClick={() => {viewProfile(users?.key); setShowSearch(false)}}>
                                 <img src="/profile.png" alt="profile"/>
                                 <p>{users?.username}</p>
-                                <button onClick={() => checkFollowing(users)}>{user?.following?.includes(users?.user_id) ? "unfollow" : "follow"}</button>
+                                <button onClick={(e) => {e.stopPropagation(); checkFollowing(users)}}>{user?.following?.includes(users?.user_id) ? "unfollow" : "follow"}</button>
                             </div>
                         ))
                     )}
